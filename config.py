@@ -1,3 +1,4 @@
 class Config:
-    screen_width = 1000
-    screen_height = 600
+    SCREEN_WIDTH = 1280
+    SCREEN_HEIGHT = 720
+    BLOCK_SIZE = 80

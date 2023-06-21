@@ -10,35 +10,36 @@ class Rat(Body):
 
     def draw(self, screen, camera):
         pos_x = self.pos.x - camera.pos.x
-        if pos_x < -40 or pos_x > Config.screen_width + 40:
-            return
+        if pos_x < -40 or pos_x > Config.SCREEN_WIDTH + 40: return
 
         pos = pygame.Vector2(pos_x, self.pos.y)
 
+        S = Config.BLOCK_SIZE
+
         # body
-        pygame.draw.circle(screen, self.color, pos, 40)
+        pygame.draw.rect(screen, self.color, pygame.Rect(pos.x, pos.y, S, S))
 
         # ears
-        pygame.draw.circle(screen, self.color, pos + (-30, -30), 10)
-        pygame.draw.circle(screen, self.color, pos + (30, -30), 10)
+        pygame.draw.circle(screen, self.color, pos + (0, 0), S / 4)
+        pygame.draw.circle(screen, self.color, pos + (S, 0), S / 4)
 
         # eyes
-        pygame.draw.circle(screen, 'black', pos + (-20, -10), 5)
-        pygame.draw.circle(screen, 'black', pos + (20, -10), 5)
+        pygame.draw.circle(screen, 'black', pos + (S / 4, S * 3 / 8), S / 16)
+        pygame.draw.circle(screen, 'black', pos + (S * 3 / 4, S * 3 / 8), S / 16)
 
         # nose
-        pygame.draw.circle(screen, 'black', pos + (0, 0), 5)
+        pygame.draw.circle(screen, 'black', pos + (S / 2, S / 2), S / 16)
 
         # mouth
-        pygame.draw.line(screen, 'black', pos + (-10, 15), pos + (10, 15), width = 5)
+        pygame.draw.line(screen, 'black', pos + (S * 3 / 8, S * 55 / 80), pos + (S * 5 / 8, S * 55 / 80), width = int(S / 16))
 
         # moustache
-        pygame.draw.line(screen, 'black', pos + (-15, 5), pos + (-30, 0), width = 3)
-        pygame.draw.line(screen, 'black', pos + (-15, 8), pos + (-30, 8), width = 3)
-        pygame.draw.line(screen, 'black', pos + (-15, 11), pos + (-30, 16), width = 3)
-        pygame.draw.line(screen, 'black', pos + (15, 5), pos + (30, 0), width = 3)
-        pygame.draw.line(screen, 'black', pos + (15, 8), pos + (30, 8), width = 3)
-        pygame.draw.line(screen, 'black', pos + (15, 11), pos + (30, 16), width = 3)
+        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 45 / 80), pos + (S * 10 / 80, S * 40 / 80), width = int(S / 20))
+        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 48 / 80), pos + (S * 10 / 80, S * 48 / 80), width = int(S / 20))
+        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 51 / 80), pos + (S * 10 / 80, S * 56 / 80), width = int(S / 20))
+        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 45 / 80), pos + (S * 70 / 80, S * 40 / 80), width = int(S / 20))
+        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 48 / 80), pos + (S * 70 / 80, S * 48 / 80), width = int(S / 20))
+        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 51 / 80), pos + (S * 70 / 80, S * 56 / 80), width = int(S / 20))
 
     @property
     def color(self):
@@ -74,9 +75,9 @@ class Rat(Body):
             self.velocity.y += 0.1
 
         self.pos.x += self.velocity.x * dt
-        self.pos.y = min(Config.screen_height - 40, self.pos.y + self.velocity.y * dt)
+        self.pos.y = min(Config.SCREEN_HEIGHT - Config.BLOCK_SIZE, self.pos.y + self.velocity.y * dt)
 
-        if self.pos.y >= Config.screen_height - 40:
+        if self.pos.y >= Config.SCREEN_HEIGHT - Config.BLOCK_SIZE:
             self.falling = False
             self.velocity.y = 0
         else:
