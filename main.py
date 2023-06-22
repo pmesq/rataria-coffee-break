@@ -59,7 +59,7 @@ def menu_inicial(keys):
 
     pygame.draw.rect(screen, Config.COR_FONTE, (359, 432, 516, 56))
     pygame.draw.rect(screen, Config.COR_FUNDO_TEXTO, (362, 435, 510, 50))
-    draw_text("Pressione ESPAÇO para iniciar", Config.font, Config.COR_FONTE, 407, 450)
+    draw_text("Pressione ESPAÇO para iniciar", Config.font, Config.COR_FONTE, 410, 450)
 
     telaAtual = Tela.MENU_INICIAL
     return
