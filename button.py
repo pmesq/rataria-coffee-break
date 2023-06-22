@@ -26,11 +26,7 @@ class Button():
 		if pygame.mouse.get_pressed()[0] == 0:
 			self.clicked = False
 
-		#draw button on screen
-		if self.rect1.collidepoint(pos):
-			surface.blit(self.image2, (self.rect1.x, self.rect1.y))
-
-		else:
+		#draw button on screenjogo
 			surface.blit(self.image1, (self.rect1.x, self.rect1.y))
 
 		return action

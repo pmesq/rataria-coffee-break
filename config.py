@@ -29,6 +29,7 @@ class Config:
     # imagens que serão usadas durante o jogo
     menu1_jpg = pygame.image.load("imgs/menu1.jpg")
     menu2_jpg = pygame.image.load("imgs/menu2.jpg")
+    leaderboardFUNDO_jpg = pygame.image.load("imgs/leaderboard.jpg")
     
     campanha_jpg = pygame.image.load("imgs/botoes/campanha.png")
     arcade_jpg = pygame.image.load("imgs/botoes/arcade.png")

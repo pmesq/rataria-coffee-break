@@ -82,9 +82,8 @@ class Evento:
     
     
     def leaderboard(keys, screen):
-        pygame.draw.rect(screen, Config.COR_FONTE, (359, 432, 516, 56))
-        pygame.draw.rect(screen, Config.COR_FUNDO_TEXTO, (362, 435, 510, 50))
-        Evento.draw_text(screen, "JANELA DE LEADERBOARD", Config.font, Config.COR_FONTE, 410, 450)
+        # Exibo o plano de fundo
+        screen.blit(Config.leaderboardFUNDO_jpg, (0,0))
 
         if Config.botao_sair.draw(screen):
             return Tela.SAIR
