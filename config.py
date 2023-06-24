@@ -25,7 +25,6 @@ class Config:
     font = pygame.font.SysFont("arialblacomicck", 40)
     COR_FONTE = (255, 255, 255)
     COR_FUNDO_TEXTO = (0, 0, 0)
-    COR_FUNDO_ESC = (164, 128, 128)
 
     # imagens que serão usadas durante o jogo
     menu1_jpg = pygame.image.load("imgs/menu1.jpg")
@@ -50,5 +49,5 @@ class Config:
     botao_leaderboard = Button(254, 190, leaderboard_jpg, leaderboardAlt_jpg, 0.5)
     botao_sair = Button(254, 600, sair_jpg, sairAlt_jpg, 0.5)
     
-    botao_esc = Button(25, 25, escKey_jpg, escKey_jpg, 1.2)
+    botao_esc = Button(254, 600, escKey_jpg, escKey_jpg, 0.5)
     botao_back = Button(45, 45, back_jpg, back_jpg, 0.5)
