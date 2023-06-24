@@ -85,7 +85,7 @@ class Evento:
         # Exibo o plano de fundo
         screen.blit(Config.leaderboardFUNDO_jpg, (0,0))
 
-        if Config.botao_sair.draw(screen):
-            return Tela.SAIR
+        if Config.botao_back.draw(screen):
+            return Tela.MENU_PRINCIPAL
 
         return Tela.LEADERBOARD
