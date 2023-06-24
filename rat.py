@@ -7,39 +7,21 @@ class Rat(Body):
         super().__init__(pos)
         self.color = color
         self.falling = True
+        self.image = pygame.image.load('imgs/ratin_right.png').convert_alpha()
+        self.last_direction = "right"
+
 
     def draw(self, screen, camera):
         pos_x = self.pos.x - camera.pos.x #Calcula a posição inicial
         if pos_x < -40 or pos_x > Config.SCREEN_WIDTH + 40: return #Verifica se o rato está fora da tela
-
+        
         pos = pygame.Vector2(pos_x, self.pos.y)
 
         S = Config.BLOCK_SIZE
 
-        # Desenha o corpo
-        pygame.draw.rect(screen, self.color, pygame.Rect(pos.x, pos.y, S, S))
 
-        # Desenha as orelhas
-        pygame.draw.circle(screen, self.color, pos + (0, 0), S / 4)
-        pygame.draw.circle(screen, self.color, pos + (S, 0), S / 4)
+        screen.blit(self.image, (pos.x, pos.y))
 
-        # Desenha os olhos
-        pygame.draw.circle(screen, 'black', pos + (S / 4, S * 3 / 8), S / 16)
-        pygame.draw.circle(screen, 'black', pos + (S * 3 / 4, S * 3 / 8), S / 16)
-
-        # Desenha o nariz
-        pygame.draw.circle(screen, 'black', pos + (S / 2, S / 2), S / 16)
-
-        # Desenha a boca
-        pygame.draw.line(screen, 'red', pos + (S * 3 / 8, S * 55 / 80), pos + (S * 5 / 8, S * 55 / 80), width=int(S / 16))
-
-        # Desenha os bigodes
-        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 45 / 80), pos + (S * 10 / 80, S * 40 / 80), width=int(S / 20))
-        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 48 / 80), pos + (S * 10 / 80, S * 48 / 80), width=int(S / 20))
-        pygame.draw.line(screen, 'black', pos + (S * 25 / 80, S * 51 / 80), pos + (S * 10 / 80, S * 56 / 80), width=int(S / 20))
-        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 45 / 80), pos + (S * 70 / 80, S * 40 / 80), width=int(S / 20))
-        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 48 / 80), pos + (S * 70 / 80, S * 48 / 80), width=int(S / 20))
-        pygame.draw.line(screen, 'black', pos + (S * 55 / 80, S * 51 / 80), pos + (S * 70 / 80, S * 56 / 80), width=int(S / 20))
 
     @property # Getter: Retorna a cor atual do rato.
     def color(self):
@@ -71,12 +53,23 @@ class Rat(Body):
         Atualiza o estado do objeto Rat com base no tempo decorrido desde a última atualização.
         Args: dt (float): Tempo decorrido desde a última atualização em segundos.
         """
+        S = Config.BLOCK_SIZE
         # Verifica se a velocidade horizontal é maior que zero
         if self.velocity.x > 0:
             # Reduz gradualmente a velocidade horizontal com um limite mínimo de 0
             self.velocity.x = max(self.velocity.x - 0.1, 0) 
+            self.image = Config.RAT_RIGHT
+            self.last_direction = "right"
         elif self.velocity.x < 0:
             self.velocity.x = min(self.velocity.x + 0.1, 0)
+            self.image = Config.RAT_LEFT
+            self.last_direction = "left"
+
+        #Verifica se o rato parou o movimento e atualiza sua imagem conforme ultima direção
+        if self.last_direction == "left":
+            self.image = Config.RAT_LEFT
+        elif self.last_direction == "right":
+            self.image = Config.RAT_RIGHT
 
         # Verifica se o rato está caindo
         if self.falling:
