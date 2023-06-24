@@ -22,8 +22,9 @@ class Config:
     PLAYER_COLOR = "purple"
 
     # Configuração do rato
-    RAT_LEFT = pygame.transform.scale(pygame.image.load('imgs/ratin_left.png'), (BLOCK_SIZE,BLOCK_SIZE))
-    RAT_RIGHT = pygame.transform.scale(pygame.image.load('imgs/ratin_right.png'), (BLOCK_SIZE,BLOCK_SIZE))
+    RAT_COLOR = "blue"
+    RAT_LEFT = lambda color: pygame.transform.scale(pygame.image.load(f'imgs/ratos/{color}/ratin_left.png'), (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
+    RAT_RIGHT = lambda color: pygame.transform.scale(pygame.image.load(f'imgs/ratos/{color}/ratin_right.png'), (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
 
     # Configuração da fonte
     font = pygame.font.SysFont("arialblacomicck", 40)

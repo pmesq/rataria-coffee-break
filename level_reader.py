@@ -39,7 +39,7 @@ class LevelReader:
 
                 # Verificar o caractere e adicionar um corpo correspondente
                 if ch == 'E':
-                    bodies.append(Rat('yellow', pygame.Vector2(j * Config.BLOCK_SIZE, Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE)))
+                    bodies.append(Rat(Config.RAT_COLOR, pygame.Vector2(j * Config.BLOCK_SIZE, Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE)))
                 elif ch == 'S':
                     player = Player(pygame.Vector2(j * Config.BLOCK_SIZE, Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE))
 

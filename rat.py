@@ -7,7 +7,7 @@ class Rat(Body):
         super().__init__(pos)
         self.color = color
         self.falling = True
-        self.image = pygame.image.load('imgs/ratin_right.png').convert_alpha()
+        self.image = Config.RAT_RIGHT(color)
         self.last_direction = "right"
 
 
@@ -58,18 +58,18 @@ class Rat(Body):
         if self.velocity.x > 0:
             # Reduz gradualmente a velocidade horizontal com um limite mínimo de 0
             self.velocity.x = max(self.velocity.x - 0.1, 0) 
-            self.image = Config.RAT_RIGHT
+            self.image = Config.RAT_RIGHT(self.color)
             self.last_direction = "right"
         elif self.velocity.x < 0:
             self.velocity.x = min(self.velocity.x + 0.1, 0)
-            self.image = Config.RAT_LEFT
+            self.image = Config.RAT_LEFT(self.color)
             self.last_direction = "left"
 
         #Verifica se o rato parou o movimento e atualiza sua imagem conforme ultima direção
         if self.last_direction == "left":
-            self.image = Config.RAT_LEFT
+            self.image = Config.RAT_LEFT(self.color)
         elif self.last_direction == "right":
-            self.image = Config.RAT_RIGHT
+            self.image = Config.RAT_RIGHT(self.color)
 
         # Verifica se o rato está caindo
         if self.falling:
