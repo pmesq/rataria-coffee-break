@@ -45,20 +45,16 @@ def main():
         keys = pygame.key.get_pressed() # Captura das teclas pressionadas pelo jogador
         
         # Executo a função caracteristica do modo atual
-        match telaAtual: 
-            case Tela.MENU_INICIAL:
-                telaAtual = Evento.menu_inicial(keys, screen)
-            case Tela.MENU_PRINCIPAL:
-                telaAtual = Evento.menu_principal(keys, screen)
-            case Tela.ARCADE:
-                telaAtual = Evento.arcade(keys, screen, player, tilemap, camera, bodies, dt)
-            case Tela.CAMPANHA:
-                telaAtual = Evento.campanha(keys, screen)
-            case Tela.LEADERBOARD:
-                telaAtual = Evento.leaderboard(keys, screen)
-
-        
-        print(telaAtual)
+        if telaAtual ==  Tela.MENU_INICIAL:
+            telaAtual = Evento.menu_inicial(keys, screen)
+        elif telaAtual ==  Tela.MENU_PRINCIPAL:
+            telaAtual = Evento.menu_principal(keys, screen)
+        elif telaAtual ==  Tela.ARCADE:
+            telaAtual = Evento.arcade(keys, screen, player, tilemap, camera, bodies, dt)
+        elif telaAtual ==  Tela.CAMPANHA:
+            telaAtual = Evento.campanha(keys, screen)
+        elif telaAtual ==  Tela.LEADERBOARD:
+            telaAtual = Evento.leaderboard(keys, screen)
 
         # Atualização da tela e controle de FPS
         pygame.display.flip()
@@ -71,3 +67,5 @@ main()
 
 # Encerramento do pygame e finalização do jogo
 pygame.quit()
+
+# Testando push
