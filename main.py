@@ -57,9 +57,6 @@ def main():
             case Tela.LEADERBOARD:
                 telaAtual = Evento.leaderboard(keys, screen)
 
-        
-        print(telaAtual)
-
         # Atualização da tela e controle de FPS
         pygame.display.flip()
         dt = clock.tick(60)
