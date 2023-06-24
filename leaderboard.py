@@ -1,7 +1,7 @@
 import pygame
 import heapq
-#from config import Config
-#from evento import Evento
+from config import Config
+from evento import Evento
 
 class Leaderboard():
 	def __init__(self, endrecoArquivo):
@@ -41,14 +41,13 @@ class Leaderboard():
 			File.write("FIM")
 			File.close()
 			pass
-		
-'''
+	
 	def draw(self, screen):
-		lista = self.lisaTop5Jogadores()
-		sizePlacar = lista.size()
+		lista = self.lisaTop5Jogadore()
+		idx = 1
 
-		for idx in range(0, 5):
-			if(sizePlacar > idx):
-				Evento.draw_text(screen, str((idx+1)+". "+lista[idx]), Config.font, Config.COR_FONTE, 100, 100+20*idx)
-		
-'''	
+		for nomeJogador, pontosJogador in lista:
+			Evento.draw_text(screen, str(idx)+"."+nomeJogador, Config.font2, Config.COR_FONTE, 245, 120+80*idx)
+			Evento.draw_text(screen, str(pontosJogador), Config.font2, Config.COR_FONTE2, 235+600, 120+80*idx)
+			idx += 1
+

@@ -82,11 +82,13 @@ class Evento:
         return Tela.CAMPANHA
     
     
-    def leaderboard(keys, screen):
+    def leaderboard(keys, screen, leaderboard):
         # Exibo o plano de fundo
         screen.blit(Config.leaderboardFUNDO_jpg, (0,0))
 
         if Config.botao_back.draw(screen):
             return Tela.MENU_PRINCIPAL
+        
+        leaderboard.draw(screen)
 
         return Tela.LEADERBOARD

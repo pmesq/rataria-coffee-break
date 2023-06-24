@@ -8,6 +8,7 @@ from player import Player
 from button import Button
 from tela import Tela
 from evento import Evento
+from leaderboard import Leaderboard
 
 from enum import Enum
 
@@ -35,6 +36,9 @@ def main():
     # Variável que controla em qual tela o jogo esta 
     telaAtual = Tela.MENU_INICIAL
 
+    # Inicio o leaderboard com as informação salvas do leaderboard passado
+    leaderboard = Leaderboard("data/leaderboardPlacar.txt")
+
     # Loop principal 
     while running:
         for event in pygame.event.get():
@@ -54,7 +58,7 @@ def main():
         elif telaAtual ==  Tela.CAMPANHA:
             telaAtual = Evento.campanha(keys, screen)
         elif telaAtual ==  Tela.LEADERBOARD:
-            telaAtual = Evento.leaderboard(keys, screen)
+            telaAtual = Evento.leaderboard(keys, screen, leaderboard)
 
         # Atualização da tela e controle de FPS
         pygame.display.flip()
@@ -62,6 +66,7 @@ def main():
 
         if telaAtual == Tela.SAIR:
             running = False
+    leaderboard.gravar("data/leaderboardPlacar.txt")
 
 main()
 

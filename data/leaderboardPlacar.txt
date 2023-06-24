@@ -1,5 +1,6 @@
-a;200
-b;88
-e 33;33
-g;21
+darosa;4425
+delima;3455
+orlando;245
+fabio;25
+pedro;12
 FIM

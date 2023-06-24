@@ -31,6 +31,11 @@ class Config:
     COR_FONTE = (255, 255, 255)
     COR_FUNDO_TEXTO = (0, 0, 0)
 
+    # Configuração da fonte
+    font2 = pygame.font.Font("imgs/font.ttf", 50)
+    COR_FONTE2 = (189, 213, 28)
+    COR_FUNDO_TEXTO = (0, 0, 0)
+
     # imagens que serão usadas durante o jogo
     LIFE = lambda x: pygame.transform.scale(pygame.image.load(f'imgs/lives/{x}.png'), (0.5*Config.BLOCK_SIZE*(199/57), 0.5*Config.BLOCK_SIZE))
 
