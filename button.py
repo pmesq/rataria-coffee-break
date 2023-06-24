@@ -27,6 +27,8 @@ class Button():
 			self.clicked = False
 
 		#draw button on screenjogo
+		if self.rect1.collidepoint(pos):
+			surface.blit(self.image2, (self.rect1.x, self.rect1.y))
+		else:
 			surface.blit(self.image1, (self.rect1.x, self.rect1.y))
-
 		return action

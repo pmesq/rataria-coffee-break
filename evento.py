@@ -45,7 +45,12 @@ class Evento:
         return Tela.MENU_PRINCIPAL
 
     def arcade(keys, screen, player, tilemap, camera, bodies, dt):
-        # Caso seja pressionado a telca ESC, eu troco para o modo do menu 
+        # Desenho botao de esc na tela, caso pressionado o botao na tela eu troco para o modo menu
+        pygame.draw.rect(screen, Config.COR_FUNDO_ESC, Config.botao_esc.rect1)
+        if Config.botao_esc.draw(screen):
+            return Tela.MENU_PRINCIPAL
+        
+        # Caso seja pressionado a telca ESC eu troco para o modo do menu 
         if keys[pygame.K_ESCAPE]:
             return Tela.MENU_PRINCIPAL
 
@@ -63,7 +68,7 @@ class Evento:
         for body in bodies:
             body.update(dt)
             body.draw(screen, camera)
-        
+
         # Atualização da posição da câmera para seguir o jogador
         camera.pos.x = min(max(0, player.pos.x - Config.SCREEN_WIDTH / 2), tilemap.m * Config.BLOCK_SIZE - Config.SCREEN_WIDTH)
 

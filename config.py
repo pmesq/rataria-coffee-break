@@ -25,16 +25,19 @@ class Config:
     font = pygame.font.SysFont("arialblacomicck", 40)
     COR_FONTE = (255, 255, 255)
     COR_FUNDO_TEXTO = (0, 0, 0)
+    COR_FUNDO_ESC = (164, 128, 128)
 
     # imagens que serão usadas durante o jogo
     menu1_jpg = pygame.image.load("imgs/menu1.jpg")
     menu2_jpg = pygame.image.load("imgs/menu2.jpg")
-    leaderboardFUNDO_jpg = pygame.image.load("imgs/leaderboard.jpg")
+    leaderboardFUNDO_jpg = pygame.image.load("imgs/leaderboard2.jpg")
     
     campanha_jpg = pygame.image.load("imgs/botoes/campanha.png")
     arcade_jpg = pygame.image.load("imgs/botoes/arcade.png")
     leaderboard_jpg = pygame.image.load("imgs/botoes/leaderboard.png")
     sair_jpg = pygame.image.load("imgs/botoes/sair.png")
+    escKey_jpg = pygame.image.load("imgs/botoes/escKey.png")
+    back_jpg = pygame.image.load("imgs/botoes/back.png")
 
     campanhaAlt_jpg = pygame.image.load("imgs/botoes/campanhaAlt.png")
     arcadeAlt_jpg = pygame.image.load("imgs/botoes/arcadeAlt.png")
@@ -46,3 +49,6 @@ class Config:
     botao_arcade = Button(254, 100, arcade_jpg, arcadeAlt_jpg, 0.5)
     botao_leaderboard = Button(254, 190, leaderboard_jpg, leaderboardAlt_jpg, 0.5)
     botao_sair = Button(254, 600, sair_jpg, sairAlt_jpg, 0.5)
+    
+    botao_esc = Button(25, 25, escKey_jpg, escKey_jpg, 1.2)
+    botao_back = Button(45, 45, back_jpg, back_jpg, 0.5)
