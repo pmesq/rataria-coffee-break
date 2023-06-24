@@ -32,6 +32,8 @@ class Config:
     COR_FUNDO_TEXTO = (0, 0, 0)
 
     # imagens que serão usadas durante o jogo
+    LIFE = lambda x: pygame.transform.scale(pygame.image.load(f'imgs/lives/{x}.png'), (0.5*Config.BLOCK_SIZE*(199/57), 0.5*Config.BLOCK_SIZE))
+
     menu1_jpg = pygame.image.load("imgs/menu1.jpg")
     menu2_jpg = pygame.image.load("imgs/menu2.jpg")
     leaderboardFUNDO_jpg = pygame.image.load("imgs/leaderboard2.jpg")

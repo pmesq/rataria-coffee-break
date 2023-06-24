@@ -49,7 +49,7 @@ class Evento:
         if keys[pygame.K_ESCAPE]:
             return Tela.MENU_PRINCIPAL
 
-        # Caputra do inoput do jogador
+        # Captura do input do jogador
         if keys[pygame.K_w]:
             player.jump()
         if keys[pygame.K_a] and not keys[pygame.K_d]:
@@ -58,7 +58,7 @@ class Evento:
             player.move_right()
 
         tilemap.draw(screen, camera) # Desenho do tilemap na tela, levando em consideração a câmera
-
+        
         # Atualização e desenho de todos os corpos presentes no jogo
         for body in bodies:
             body.update(dt)
@@ -66,6 +66,7 @@ class Evento:
         
         # Atualização da posição da câmera para seguir o jogador
         camera.pos.x = min(max(0, player.pos.x - Config.SCREEN_WIDTH / 2), tilemap.m * Config.BLOCK_SIZE - Config.SCREEN_WIDTH)
+        screen.blit(Config.LIFE(player.lives), (15,10))
 
         # Continuo no modo arcade
         return Tela.ARCADE

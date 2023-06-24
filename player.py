@@ -11,4 +11,7 @@ class Player(Rat):
 
     def __init__(self, pos):
         super().__init__(Config.PLAYER_COLOR, pos)
+        self.lives = 3
+
+    
     

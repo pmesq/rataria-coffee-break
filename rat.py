@@ -9,6 +9,7 @@ class Rat(Body):
         self.falling = True
         self.image = Config.RAT_RIGHT(color)
         self.last_direction = "right"
+        self.lives = 3
 
 
     def draw(self, screen, camera):
@@ -18,7 +19,6 @@ class Rat(Body):
         pos = pygame.Vector2(pos_x, self.pos.y)
 
         S = Config.BLOCK_SIZE
-
 
         screen.blit(self.image, (pos.x, pos.y))
 

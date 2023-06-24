@@ -10,6 +10,7 @@ class Tilemap:
         self.m = len(grid[0])  # Número de colunas da grade
         self.grid = grid  # Armazena a grade fornecida
         self.tile_size = Config.BLOCK_SIZE  # Tamanho dos blocos em pixels, obtido da classe Config
+        self.block_texture = pygame.transform.scale(pygame.image.load(f'imgs/tile.jpeg'), (self.tile_size,self.tile_size))
 
     def draw(self, screen, camera):
         for i in range(self.n):
@@ -27,4 +28,4 @@ class Tilemap:
                 pos = pygame.Vector2(pos_x, Config.SCREEN_HEIGHT - Config.BLOCK_SIZE * (self.n - i))
                 
                 # Desenha um retângulo na tela representando o bloco
-                pygame.draw.rect(screen, Config.BLOCK_COLOR, pygame.Rect(pos.x, pos.y, Config.BLOCK_SIZE, Config.BLOCK_SIZE))
+                screen.blit(self.block_texture, pos)
