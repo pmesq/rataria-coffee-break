@@ -66,6 +66,8 @@ class Evento:
         
         # Atualização da posição da câmera para seguir o jogador
         camera.pos.x = min(max(0, player.pos.x - Config.SCREEN_WIDTH / 2), tilemap.m * Config.BLOCK_SIZE - Config.SCREEN_WIDTH)
+
+        # Desenha o contador de vidas
         screen.blit(Config.LIFE(player.lives), (15,10))
 
         # Continuo no modo arcade
@@ -74,7 +76,7 @@ class Evento:
     def campanha(keys, screen):
         pygame.draw.rect(screen, Config.COR_FONTE, (359, 432, 516, 56))
         pygame.draw.rect(screen, Config.COR_FUNDO_TEXTO, (362, 435, 510, 50))
-        Evento.draw_text(screen, "JADELA DE CAMPANHA", Config.font, Config.COR_FONTE, 410, 450)
+        Evento.draw_text(screen, "JANELA DE CAMPANHA", Config.font, Config.COR_FONTE, 410, 450)
 
         if Config.botao_sair.draw(screen):
             return Tela.SAIR

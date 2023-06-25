@@ -33,3 +33,10 @@ class Body:
         Esse método deve ser implementado nas classes filhas.
         """
         pass
+
+    def update(self, dt):
+        """
+        Método responsável por atualizar o objeto na tela.
+        Esse método deve ser implementado nas classes filhas.
+        """
+        pass

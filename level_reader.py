@@ -2,6 +2,7 @@ import pygame
 from config import Config
 from rat import Rat
 from player import Player
+from cheese import Cheese
 from tile import Tile
 from tilemap import Tilemap
 
@@ -42,6 +43,8 @@ class LevelReader:
                     bodies.append(Rat(Config.RAT_COLOR, pygame.Vector2(j * Config.BLOCK_SIZE, Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE)))
                 elif ch == 'S':
                     player = Player(pygame.Vector2(j * Config.BLOCK_SIZE, Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE))
+                elif ch == 'C':
+                    bodies.append(Cheese(pygame.Vector2(j * Config.BLOCK_SIZE+ 0.1118*Config.BLOCK_SIZE , Config.SCREEN_HEIGHT - (n - i) * Config.BLOCK_SIZE+0.5*Config.BLOCK_SIZE )))
 
         # Criar um objeto Tilemap a partir da grade lida
         tilemap = Tilemap(grid)
