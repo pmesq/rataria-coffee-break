@@ -39,11 +39,22 @@ def main():
     # Inicio o leaderboard com as informação salvas do leaderboard passado
     leaderboard = Leaderboard("data/leaderboardPlacar.txt")
 
+    # Char lido
+    charLido = ''
+
     # Loop principal 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if telaAtual == Tela.NOME_JOGADOR:
+                if event.type == pygame.KEYDOWN:
+                    for i in range (0,12):
+                        dt = clock.tick(60)
+                    if event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN:
+                        charLido = event.unicode
+                    else:
+                        charLido = '$'
 
         screen.fill(Config.SCREEN_COLOR) # Preenchimento da tela com uma cor de fundo    
         keys = pygame.key.get_pressed() # Captura das teclas pressionadas pelo jogador
@@ -59,6 +70,8 @@ def main():
             telaAtual = Evento.campanha(keys, screen)
         elif telaAtual ==  Tela.LEADERBOARD:
             telaAtual = Evento.leaderboard(keys, screen, leaderboard)
+        elif telaAtual == Tela.NOME_JOGADOR:
+            telaAtual = Evento.inserirNome(keys, screen, charLido)
 
         # Atualização da tela e controle de FPS
         pygame.display.flip()

@@ -36,7 +36,8 @@ class Evento:
         if Config.botao_campanha.draw(screen):
             return Tela.CAMPANHA
         elif Config.botao_arcade.draw(screen):
-            return Tela.ARCADE
+            Config.nomeJogador = ""
+            return Tela.NOME_JOGADOR
         elif Config.botao_leaderboard.draw(screen):
             return Tela.LEADERBOARD
         elif Config.botao_sair.draw(screen):
@@ -94,3 +95,32 @@ class Evento:
         leaderboard.draw(screen)
 
         return Tela.LEADERBOARD
+    
+    def inserirNome(keys, screen, charLido):
+        if any(keys):
+            if keys[pygame.K_RETURN] and len(Config.nomeJogador) > 0:
+                return Tela.ARCADE
+            elif keys[pygame.K_BACKSPACE] and len(Config.nomeJogador) > 0:
+                Config.nomeJogador = Config.nomeJogador[:-1]
+            elif charLido != '$' and len(Config.nomeJogador) < 7:
+                Config.nomeJogador += charLido
+
+        # Fill the screen with Config.COR_FUNDO_TEXTO color
+        screen.fill(Config.COR_FUNDO_TEXTO)
+
+        # Fazer o texto
+        text_surface = pygame.font.Font(None, 60).render("Enter your name:", True, Config.COR_FONTE)
+        screen.blit(text_surface, (340, 250))
+
+        # Fazer a caixa de texto
+        pygame.draw.rect(screen, Config.COR_FONTE, Config.input_box, 2)
+
+        # Fazer caixa de texto
+        input_text = pygame.font.Font(None, 60).render(Config.nomeJogador, True, Config.COR_FONTE)
+        screen.blit(input_text, (Config.input_box.x + 10, Config.input_box.y + 10))
+
+        # Fazer botao
+        if Config.botao_enter.draw(screen):
+            return Tela.ARCADE
+        else:
+            return Tela.NOME_JOGADOR
