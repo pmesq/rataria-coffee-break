@@ -48,6 +48,13 @@ class Leaderboard():
 			File.close()
 			pass
 
+	# Para o número ficar bopnitinho na tela msm
+	def alinhado(num):
+		stringNum = str(num)
+		while 3 >= len(stringNum):
+			stringNum = " "+stringNum
+		return stringNum
+
 	# Desenha na tela o placar do leaderboard
 	def draw(self, screen):
 		# Pego os cinco melhores jogadores registrados 
@@ -56,8 +63,8 @@ class Leaderboard():
 
 		for nomeJogador, pontosJogador in lista:
 			# Desenho cada linha seperadamente
-			Evento.Config(screen, str(idx)+"."+nomeJogador, Config.font2, Config.BRANCO, 245, 120+80*idx)
-			Evento.Config(screen, str(pontosJogador), Config.font2, Config.AMARELO, 235+600, 120+80*idx)
+			Config.draw_text(screen, str(idx)+"."+nomeJogador, Config.font2, Config.BRANCO, 245, 120+80*idx)
+			Config.draw_text(screen, Leaderboard.alinhado(pontosJogador), Config.font2, Config.AMARELO, 235+600, 120+80*idx)
 			idx += 1
 
 	'''
