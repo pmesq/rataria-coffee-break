@@ -91,6 +91,8 @@ class Evento:
 
         if Config.botao_back.draw(screen):
             return Tela.MENU_PRINCIPAL
+        elif keys[pygame.K_ESCAPE]:
+            return Tela.MENU_PRINCIPAL
         
         leaderboard.draw(screen)
 
