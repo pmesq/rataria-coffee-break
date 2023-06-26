@@ -63,8 +63,8 @@ class Leaderboard():
 
 		for nomeJogador, pontosJogador in lista:
 			# Desenho cada linha seperadamente
-			Config.draw_text(screen, str(idx)+"."+nomeJogador, Config.font2, Config.BRANCO, 245, 120+80*idx)
-			Config.draw_text(screen, Leaderboard.alinhado(pontosJogador), Config.font2, Config.AMARELO, 235+600, 120+80*idx)
+			Config.draw_text(screen, str(idx)+"."+nomeJogador, Config.font2, Config.BRANCO, 245-12, 120+80*idx)
+			Config.draw_text(screen, Leaderboard.alinhado(pontosJogador), Config.font2, Config.AMARELO, 235+600-12, 120+80*idx)
 			idx += 1
 
 	'''
