@@ -1,6 +1,8 @@
 import pygame
+import math
 import leitor
 from leitor import Leitor
+from math import floor
 from button import Button
 
 class Config:
@@ -33,8 +35,10 @@ class Config:
 
     # Configuração do rato
     RAT_COLOR = "blue"
-    RAT_LEFT = lambda color: pygame.transform.scale(pygame.image.load(f'imgs/ratos/{color}/ratin_left.png'), (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
-    RAT_RIGHT = lambda color: pygame.transform.scale(pygame.image.load(f'imgs/ratos/{color}/ratin_right.png'), (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
+    rato_direita = lambda color: pygame.image.load(f'imgs/ratos/{color}/right.png')
+    rato_esquerda = lambda color: pygame.image.load(f'imgs/ratos/{color}/left.png')
+    RAT_RIGHT = lambda color, indice: pygame.transform.scale(Leitor.get_image_by_gid(Config.rato_direita(color), floor(indice), 2, 65, 72) , (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
+    RAT_LEFT = lambda color, indice: pygame.transform.scale(Leitor.get_image_by_gid(Config.rato_esquerda(color), floor(indice), 2, 65, 72) , (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
 
     # Configuração do contador de vida
     LIFE_WIDTH = 0.5*BLOCK_SIZE*(199/57)

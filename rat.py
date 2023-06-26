@@ -6,8 +6,9 @@ class Rat(Body):
     def __init__(self, color, pos):
         super().__init__(pos)
         self.color = color
+        self.indice = 0
         self.falling = True
-        self.image = Config.RAT_RIGHT(color)
+        self.image = Config.RAT_RIGHT(color, self.indice)
         self.last_direction = "right"
         self.lives = 3
 
@@ -54,31 +55,34 @@ class Rat(Body):
         Args: dt (float): Tempo decorrido desde a última atualização em segundos.
         """
         S = Config.BLOCK_SIZE
-        indice = 0
         # Verifica se a velocidade horizontal é maior que zero
         if self.velocity.x > 0:
             # Reduz gradualmente a velocidade horizontal com um limite mínimo de 0
             self.velocity.x = max(self.velocity.x - 0.1, 0) 
-            self.image = Config.RAT_RIGHT(self.color, indice)
-            if indice == 1:
-                indice -= 1
-            else: indice += 1
+            self.image = Config.RAT_RIGHT(self.color, self.indice)
+            self.indice += 0.125
+            if self.indice >= 2:
+                self.indice = 0
             self.last_direction = "right"
         elif self.velocity.x < 0:
             self.velocity.x = min(self.velocity.x + 0.1, 0)
-            self.image = Config.RAT_LEFT(self.color, indice)
-            if indice == 1:
-                indice -= 1
-            else: indice += 1
+            self.image = Config.RAT_LEFT(self.color, self.indice)
+            self.indice += 0.125
+            if self.indice >= 2:
+                self.indice = 0
             self.last_direction = "left"
 
         #Verifica se o rato parou o movimento e atualiza sua imagem conforme ultima direção
         if self.last_direction == "left":
-            self.image = Config.RAT_LEFT(self.color)
-            indice = 0
+            self.image = Config.RAT_LEFT(self.color, self.indice)
+            self.indice += 0.0625
+            if self.indice >= 2:
+                self.indice = 0
         elif self.last_direction == "right":
-            self.image = Config.RAT_RIGHT(self.color)
-            indice = 0
+            self.image = Config.RAT_RIGHT(self.color, self.indice)
+            self.indice += 0.0625
+            if self.indice >= 2:
+                self.indice = 0
 
         # Verifica se o rato está caindo
         if self.falling:
