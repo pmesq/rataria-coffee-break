@@ -11,6 +11,14 @@ class Config:
 
     pygame.init()
 
+    def draw_text(screen, text, font, text_col, x, y):
+        img = font.render(text, True, text_col)
+        screen.blit(img, (x, y))
+
+    # Atributos do jogador que serão usados no leaderboard
+    nomeJogador = ""
+    pontosJogador = 0
+
     # Configurações da tela
     SCREEN_WIDTH = 1280
     SCREEN_HEIGHT = 720
@@ -36,19 +44,12 @@ class Config:
     
     # Configuração da fonte
     font = pygame.font.SysFont("arialblacomicck", 40)
-    COR_FONTE = (255, 255, 255)
-    COR_FUNDO_TEXTO = (0, 0, 0)
-    
-    # Configuração da fonte
     font2 = pygame.font.Font("imgs/font.ttf", 50)
-    COR_FONTE2 = (189, 213, 28)
-    COR_FUNDO_TEXTO = (0, 0, 0)
-
-    # Configuração da fonte 
     font3 = pygame.font.Font("imgs/font.ttf", 40)
-    COR_FONTE2 = (189, 213, 28)
-    COR_FUNDO_TEXTO = (0, 0, 0)
-
+    BRANCO = (255, 255, 255)
+    PRETO = (0, 0, 0)
+    AMARELO = (189, 213, 28)
+    CINZA = (211, 211, 211)
 
     # imagens que serão usadas durante o jogo
     menu1_jpg = pygame.image.load("imgs/menu1.jpg")
@@ -78,7 +79,6 @@ class Config:
     botao_esc = Button(254, 600, escKey_jpg, escKey_jpg, 0.5)
     botao_back = Button(45, 45, back_jpg, back_jpg, 0.5)
     botao_enter = Button(749, 292, enter_jpg, enter_jpg, 0.5)
- 
-    nomeJogador = ""
+
     input_box = pygame.Rect(340, 300, 400, 60)
     enter_block = pygame.Rect(770, 300, 150, 60)

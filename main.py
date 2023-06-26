@@ -36,10 +36,10 @@ def main():
     # Variável que controla em qual tela o jogo esta 
     telaAtual = Tela.MENU_INICIAL
 
-    # Inicio o leaderboard com as informação salvas do leaderboard passado
+    # Inicio o leaderboard com as informação salvas no arquivo txt
     leaderboard = Leaderboard("data/leaderboardPlacar.txt")
 
-    # Char lido
+    # Char lido nos inputs, usado em NOME_JOPGADOR
     charLido = ''
 
     # Loop principal 
@@ -47,9 +47,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            # Caso a tela esteja na de inserir o nome do jogador eu capturo os caractéres lidos
             if telaAtual == Tela.NOME_JOGADOR:
                 if event.type == pygame.KEYDOWN:
-                    for i in range (0,12):
+                    for i in range (0,6):
                         dt = clock.tick(60)
                     if event.key != pygame.K_BACKSPACE and event.key != pygame.K_RETURN:
                         charLido = event.unicode
@@ -85,5 +86,3 @@ main()
 
 # Encerramento do pygame e finalização do jogo
 pygame.quit()
-
-# Testando push

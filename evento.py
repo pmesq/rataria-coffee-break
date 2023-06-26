@@ -6,21 +6,21 @@ from tela import Tela
 
 from enum import Enum
 
+'''
+Classe que coleciona 
+'''
+
 class Evento:
     pygame.init()
-
-    def draw_text(screen, text, font, text_col, x, y):
-        img = font.render(text, True, text_col)
-        screen.blit(img, (x, y))
 
     def menu_inicial(keys, screen):
         # Exibo a tela de título
         screen.blit(Config.menu1_jpg, (0,0))
 
         # Exibo a mensagem par apressionar espaço
-        pygame.draw.rect(screen, Config.COR_FONTE, (359, 432, 516, 56))
-        pygame.draw.rect(screen, Config.COR_FUNDO_TEXTO, (362, 435, 510, 50))
-        Evento.draw_text(screen, "Pressione ESPAÇO para iniciar", Config.font, Config.COR_FONTE, 410, 450)
+        pygame.draw.rect(screen, Config.CINZA, (359, 432+20, 516, 56))
+        pygame.draw.rect(screen, Config.PRETO, (362, 435+20, 510, 50))
+        Config.draw_text(screen, "Pressione ESPAÇO para iniciar", Config.font, Config.CINZA, 410, 450+20)
 
         # Caso o usuaŕio pressione espaço o programa segue para o menu principal
         if keys[pygame.K_SPACE]:
@@ -32,7 +32,7 @@ class Evento:
         # Exibo o plano de fundo
         screen.blit(Config.menu2_jpg, (0,0))
 
-        # Botões exibidos na tela
+        # Botões exibidos na tela 
         if Config.botao_campanha.draw(screen):
             return Tela.CAMPANHA
         elif Config.botao_arcade.draw(screen):
@@ -45,8 +45,12 @@ class Evento:
         
         return Tela.MENU_PRINCIPAL
 
+    '''
+    TODO AQUI FICA O MODO INFINITO
+    '''
+
     def arcade(keys, screen, player, tilemap, camera, bodies, dt):
-        # Caso seja pressionado a telca ESC, eu troco para o modo do menu 
+        # Caso seja pressionado a telca ESC, a tela volta ao menu
         if keys[pygame.K_ESCAPE]:
             return Tela.MENU_PRINCIPAL
 
@@ -73,11 +77,13 @@ class Evento:
 
         # Continuo no modo arcade
         return Tela.ARCADE
-
+    '''
+    TODO AQUI FICA O MODO ONDE TEM AS FASES
+    '''
     def campanha(keys, screen):
-        pygame.draw.rect(screen, Config.COR_FONTE, (359, 432, 516, 56))
-        pygame.draw.rect(screen, Config.COR_FUNDO_TEXTO, (362, 435, 510, 50))
-        Evento.draw_text(screen, "JANELA DE CAMPANHA", Config.font, Config.COR_FONTE, 410, 450)
+        pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
+        pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))
+        Config.draw_text(screen, "JANELA DE CAMPANHA", Config.font, Config.BRANCO, 410, 450)
 
         if Config.botao_sair.draw(screen):
             return Tela.SAIR
@@ -89,6 +95,8 @@ class Evento:
         # Exibo o plano de fundo
         screen.blit(Config.leaderboardFUNDO_jpg, (0,0))
 
+        # Caso seja pressionado a tecla ESC ou clicado o botão de volar na tela
+        # a tela é direcionada para o menu principal
         if Config.botao_back.draw(screen):
             return Tela.MENU_PRINCIPAL
         elif keys[pygame.K_ESCAPE]:
@@ -100,29 +108,33 @@ class Evento:
     
     def inserirNome(keys, screen, charLido):
         if any(keys):
+            # Caso seja pressionada a tecla ENTER com algum input escrito a tela é
+            # transferida para o modo arcade
             if keys[pygame.K_RETURN] and len(Config.nomeJogador) > 0:
                 return Tela.ARCADE
+            # Caso seja pressionada a tecla de BACKSPACE é retirado um caratere do input
             elif keys[pygame.K_BACKSPACE] and len(Config.nomeJogador) > 0:
                 Config.nomeJogador = Config.nomeJogador[:-1]
             elif charLido != '$' and len(Config.nomeJogador) < 7:
                 Config.nomeJogador += charLido
 
-        # Fill the screen with Config.COR_FUNDO_TEXTO color
-        screen.fill(Config.COR_FUNDO_TEXTO)
+        # Preencho tela de preto
+        screen.fill(Config.PRETO)
 
-        # Fazer o texto
-        text_surface = pygame.font.Font(None, 60).render("Enter your name:", True, Config.COR_FONTE)
+        # Fazer o texto que pede para inserir o nome
+        text_surface = pygame.font.Font(None, 60).render("Insira seu nome:", True, Config.BRANCO)
         screen.blit(text_surface, (340, 250))
 
         # Fazer a caixa de texto
-        pygame.draw.rect(screen, Config.COR_FONTE, Config.input_box, 2)
+        pygame.draw.rect(screen, Config.BRANCO, Config.input_box, 2)
 
-        # Fazer caixa de texto
-        input_text = pygame.font.Font(None, 60).render(Config.nomeJogador, True, Config.COR_FONTE)
+        # Inserir dentro da caixa de texto o input do nome do jogador
+        input_text = pygame.font.Font(None, 60).render(Config.nomeJogador, True, Config.BRANCO)
         screen.blit(input_text, (Config.input_box.x + 10, Config.input_box.y + 10))
 
-        # Fazer botao
-        if Config.botao_enter.draw(screen):
+        # Caso clicado o botão enter da tela o nome é lido e a tela é 
+        # transferida para o modo arcade
+        if Config.botao_enter.draw(screen) and len(Config.nomeJogador) > 0:
             return Tela.ARCADE
         else:
             return Tela.NOME_JOGADOR

@@ -4,11 +4,9 @@ from config import Config
 from evento import Evento
 
 '''
-
 Classe com um dicionário no qual sua chave é o nome do jogador e seu 
 valor associado é o máximo de pontos que tal jogador atingiu em uma
 partida
-
 '''
 
 class Leaderboard():
@@ -50,7 +48,7 @@ class Leaderboard():
 			File.close()
 			pass
 
-	# Desenha na tela  o placar do leaderboard
+	# Desenha na tela o placar do leaderboard
 	def draw(self, screen):
 		# Pego os cinco melhores jogadores registrados 
 		lista = self.lisaTop5Jogadore()
@@ -58,8 +56,8 @@ class Leaderboard():
 
 		for nomeJogador, pontosJogador in lista:
 			# Desenho cada linha seperadamente
-			Evento.draw_text(screen, str(idx)+"."+nomeJogador, Config.font2, Config.COR_FONTE, 245, 120+80*idx)
-			Evento.draw_text(screen, str(pontosJogador), Config.font2, Config.COR_FONTE2, 235+600, 120+80*idx)
+			Evento.Config(screen, str(idx)+"."+nomeJogador, Config.font2, Config.BRANCO, 245, 120+80*idx)
+			Evento.Config(screen, str(pontosJogador), Config.font2, Config.AMARELO, 235+600, 120+80*idx)
 			idx += 1
 
 	'''
