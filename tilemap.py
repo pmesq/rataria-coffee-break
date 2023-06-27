@@ -5,7 +5,7 @@ from body import Body
 from math import floor, ceil
 from collision import Collision
 
-class Tilemap:
+class Tilemap(Body):
     pos_map = lambda self, pos: pygame.Vector2(pos.x/self.tile_size, ((pos.y-Config.SCREEN_HEIGHT)/self.tile_size)+self.n)    
 
     def __init__(self, grid):
@@ -15,7 +15,6 @@ class Tilemap:
         self.grid = grid  # Armazena a grade fornecida
         self.tile_size = Config.BLOCK_SIZE  # Tamanho dos blocos em pixels, obtido da classe Config
         self.block_texture = pygame.transform.scale(pygame.image.load(f'imgs/tile.jpeg'), (self.tile_size,self.tile_size))
-        Body.bodies.append(self)
 
     def __contains__(self, hitbox):
         #Verifica se o corpo está dentro do tilemap
@@ -50,9 +49,6 @@ class Tilemap:
             if not block_bellow:
                 raise Collision(Collision.Flying)    
         return False
-        
-        
-        
 
     def draw(self, screen, camera):
         for i in range(self.n):
