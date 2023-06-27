@@ -25,6 +25,7 @@ class Rat(Body):
         self._dead = dead
         # Espaço para uma eventual animação de morte do rato
         if dead:
+            Body.bodies[0].velocity.y = -1
             Body.bodies.remove(self)
 
 
