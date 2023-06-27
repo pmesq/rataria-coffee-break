@@ -6,7 +6,6 @@ from collision import Collision
 class Rat(Body):
     def __init__(self, color, pos):
         super().__init__(pos)
-        Body.bodies.append(self)
         self.color = color
         self.indice = 0
         self.falling = False

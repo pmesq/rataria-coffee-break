@@ -8,7 +8,6 @@ class Cheese(Body):
 
     def __init__(self, pos):
         super().__init__(pos)
-        Body.bodies.append(self)
         self.image = Config.CHEESE_IMAGE
         self.collected = False
 
@@ -24,7 +23,7 @@ class Cheese(Body):
 
     def __contains__(self, hitbox): #Sobscreve o operador in para verificar se um ponto está dentro da hitbox do queijo
         for point in hitbox:
-            if point.x >= self.pos.x and point.x <= self.pos.x + Config.BLOCK_SIZE and point.y >= self.pos.y and point.y <= self.pos.y + Config.BLOCK_SIZE:
+            if point.x >= self.pos.x and point.x <= self.pos.x + Config.CHEESE_WIDTH and point.y >= self.pos.y and point.y <= self.pos.y + Config.CHEESE_HEIGTH:
                 self.collected = True
                 Cheese.many_collected += 1
         return False

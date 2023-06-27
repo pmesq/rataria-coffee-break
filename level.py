@@ -5,11 +5,21 @@ from player import Player
 from cheese import Cheese
 from tile import Tile
 from tilemap import Tilemap
+from body import Body
+from camera import Camera
 
-class LevelReader:
+class Level:
     """
     Classe responsável por ler e interpretar os dados de um nível do jogo.
     """
+    def __init__(self, filepath):
+        tilemap, player, bodies = Level.read(filepath)
+        self.tilemap = tilemap
+        self.player = player
+        self.bodies = bodies
+        self.dt = 0
+        self.camera = Camera(pygame.Vector2(0, 0))
+        self.dt = 0
 
     def read(filename: str):
         # Abrir o arquivo para leitura, ler as linhas do arquivo e separá-las em uma lista
@@ -49,8 +59,11 @@ class LevelReader:
         # Criar um objeto Tilemap a partir da grade lida
         tilemap = Tilemap(grid)
 
-        # Adicionar o corpo do jogador à lista de corpos
+        # Adicionar o corpo do jogador e o tilemap à lista de corpos
         bodies.append(player)
+        bodies.append(tilemap)
+        Body.bodies = bodies
+        Cheese.many_collected = 0
 
         # Retornar o Tilemap, o objeto Player e a lista de corpos
         return tilemap, player, bodies
