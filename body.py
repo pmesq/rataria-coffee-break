@@ -5,10 +5,12 @@ class Body:
     Classe abstrata que representa um objeto com posição e velocidade.
     Essa classe é projetada para ser herdada por outros objetos do jogo.
     """
+    bodies = [] # Lista de objetos do jogo
 
     def __init__(self, pos: pygame.Vector2):
         self.pos = pos
         self.velocity = pygame.Vector2(0, 0) # Velocidade inicial zero
+        self.hitbox = []
 
     @property #Getter: Retorna a posição atual do objeto.
     def pos(self):

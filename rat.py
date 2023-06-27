@@ -1,27 +1,55 @@
 import pygame
 from config import Config
 from body import Body
+from collision import Collision
 
 class Rat(Body):
     def __init__(self, color, pos):
         super().__init__(pos)
+        Body.bodies.append(self)
         self.color = color
         self.indice = 0
-        self.falling = True
+        self.falling = False
         self.image = Config.RAT_RIGHT(color, self.indice)
         self.last_direction = "right"
         self.lives = 3
+        self.dead = False
 
+    @property # Getter: Retorna se o rato está morto.
+    def dead(self):
+        return self._dead
+        # Espaço para uma eventual animação de morte do rato
+
+    @dead.setter # Setter: Define se o rato está morto.
+    def dead(self, dead):
+        self._dead = dead
+        # Espaço para uma eventual animação de morte do rato
+        if dead:
+            Body.bodies.remove(self)
+
+
+    def __contains__(self, hitbox): #Sobscreve o operador in para verificar se um ponto está dentro da hitbox do rato
+        sup_esq = hitbox[0].x >= self.pos.x and hitbox[0].x <= self.pos.x + Config.RAT_SIZE and hitbox[0].y >= self.pos.y and hitbox[0].y <= self.pos.y + Config.RAT_SIZE
+        sup_dir = hitbox[1].x >= self.pos.x and hitbox[1].x <= self.pos.x + Config.RAT_SIZE and hitbox[1].y >= self.pos.y and hitbox[1].y <= self.pos.y + Config.RAT_SIZE
+        inf_esq = hitbox[2].x >= self.pos.x and hitbox[2].x <= self.pos.x + Config.RAT_SIZE and hitbox[2].y >= self.pos.y and hitbox[2].y <= self.pos.y + Config.RAT_SIZE
+        inf_dir = hitbox[3].x >= self.pos.x and hitbox[3].x <= self.pos.x + Config.RAT_SIZE and hitbox[3].y >= self.pos.y and hitbox[3].y <= self.pos.y + Config.RAT_SIZE
+
+        collision_side = (sup_esq and inf_esq) or (sup_dir and inf_dir)
+        collision_bellow = (inf_esq and not sup_esq) or (inf_dir and not sup_dir)
+        if collision_side:
+            raise Collision(Collision.Side)
+        if collision_bellow:
+            self.dead = True
+        return False
 
     def draw(self, screen, camera):
-        pos_x = self.pos.x - camera.pos.x #Calcula a posição inicial
-        if pos_x < -40 or pos_x > Config.SCREEN_WIDTH + 40: return #Verifica se o rato está fora da tela
-        
-        pos = pygame.Vector2(pos_x, self.pos.y)
+        if not self.dead:
+            pos_x = self.pos.x - camera.pos.x #Calcula a posição inicial
+            if pos_x < -40 or pos_x > Config.SCREEN_WIDTH + 40 and self.dead: return #Verifica se o rato está fora da tela ou morto
+            pos = pygame.Vector2(pos_x, self.pos.y)
 
-        S = Config.BLOCK_SIZE
-
-        screen.blit(self.image, (pos.x, pos.y))
+            pygame.draw.rect(screen, (255,0,0), (pos.x, pos.y, Config.RAT_SIZE, Config.RAT_SIZE), 1)#Desenha superficie da hitbox do rato
+            screen.blit(self.image, (pos.x, pos.y))
 
 
     @property # Getter: Retorna a cor atual do rato.
@@ -48,6 +76,7 @@ class Rat(Body):
         # Faz o rato pular se não estiver caindo.
         if not self.falling:
             self.velocity.y += -1.5
+            self.falling = True
 
     def update(self, dt):
         """
@@ -86,18 +115,44 @@ class Rat(Body):
 
         # Verifica se o rato está caindo
         if self.falling:
-            # Aumenta a velocidade vertical para simular a aceleração da gravidade
+            # Aumenta a velocidade vertical para simular a aceleração da gravidade            
             self.velocity.y += 0.1
 
         # Atualiza a posição horizontal e vertical do rato com base na velocidade horizontal e no tempo decorrido
-        self.pos.x += self.velocity.x * dt
-        self.pos.y = min(Config.SCREEN_HEIGHT - Config.BLOCK_SIZE, self.pos.y + self.velocity.y * dt)
+        new_pos = pygame.Vector2(self.pos.x + self.velocity.x * dt, self.pos.y + self.velocity.y * dt)
+        if new_pos != self.pos:
+            try:
+                canto_sup_esq = pygame.Vector2(new_pos.x, new_pos.y)
+                canto_sup_dir = pygame.Vector2(new_pos.x + S, new_pos.y)
+                canto_inf_esq = pygame.Vector2(new_pos.x, new_pos.y + S)
+                canto_inf_dir = pygame.Vector2(new_pos.x + S, new_pos.y + S)
+                hitbox = [canto_sup_esq, canto_sup_dir,canto_inf_esq, canto_inf_dir]
+                
+                for body in Body.bodies:
+                    if body != self:
+                        if hitbox in body: 
+                            raise Exception("Colisão")
+                self.pos.x = new_pos.x        
+                self.pos.y = new_pos.y
+            except Collision as C:
+                if C.type == Collision.Ground:
+                    if self.falling:
+                        self.falling = False
+                        self.velocity.y = 0
+                        self.pos.y = C.height
+                        self.pos.x = new_pos.x
+                    else:
+                        self.pos.x = new_pos.x
+                        self.pos.y = new_pos.y
+                elif C.type == Collision.Flying:
+                    self.falling = True
+                    self.pos.x = new_pos.x        
+                    self.pos.y = new_pos.y
+                elif C.type == Collision.Side:
+                    self.velocity.x *= -0.2
+                    self.pos.x += self.velocity.x * dt
+                    self.pos.y = min(new_pos.y,C.height)
 
-        # Verifica se o rato atingiu ou ultrapassou o chão
-        if self.pos.y >= Config.SCREEN_HEIGHT - Config.BLOCK_SIZE:
-            # Define que o rato não está mais caindo e zera a velocidade vertical
-            self.falling = False
-            self.velocity.y = 0
-        else:
-            # Caso contrário, o rato está no ar e ainda está caindo
-            self.falling = True
+                return
+            except Exception as e:
+                print(e)

@@ -34,6 +34,7 @@ class Config:
     PLAYER_COLOR = "purple"
 
     # Configuração do rato
+    RAT_SIZE = BLOCK_SIZE
     RAT_COLOR = "blue"
     rato_direita = lambda color: pygame.image.load(f'imgs/ratos/{color}/right.png')
     rato_esquerda = lambda color: pygame.image.load(f'imgs/ratos/{color}/left.png')
