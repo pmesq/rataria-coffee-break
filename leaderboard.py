@@ -1,6 +1,7 @@
 import pygame
 import heapq
 from config import Config
+from evento import Evento
 
 '''
 Classe com um dicionário no qual sua chave é o nome do jogador e seu 

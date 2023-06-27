@@ -23,7 +23,6 @@ class Rat(Body):
     @dead.setter # Setter: Define se o rato está morto.
     def dead(self, dead):
         self._dead = dead
-        Config.pontosJogador += 1
         # Espaço para uma eventual animação de morte do rato
         if dead:
             Body.bodies[0].velocity.y = -1
