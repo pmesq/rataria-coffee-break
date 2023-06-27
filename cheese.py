@@ -19,7 +19,7 @@ class Cheese(Body):
         self._collected = collected
 
     def __contains__(self, hitbox): #Sobscreve o operador in para verificar se um ponto está dentro da hitbox do queijo
-        for point in hitbox:
+        for point in hitbox[:4]:
             if point.x >= self.pos.x and point.x <= self.pos.x + Config.CHEESE_WIDTH and point.y >= self.pos.y and point.y <= self.pos.y + Config.CHEESE_HEIGTH:
                 self.collected = True
                 Cheese.many_collected += 1
