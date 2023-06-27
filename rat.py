@@ -150,9 +150,14 @@ class Rat(Body):
                     self.pos.x = new_pos.x        
                     self.pos.y = new_pos.y
                 elif C.type == Collision.Side:
-                    self.velocity.x *= -0.2
-                    self.pos.x += self.velocity.x * dt
-                    self.pos.y = min(new_pos.y,C.height)
+                    # self.velocity.x *= -0.2
+                    # self.pos.x += self.velocity.x * dt
+                    # self.pos.y = min(new_pos.y,C.height)
+                    player = Body.bodies[0]
+                    if player.velocity.x > 0: player.velocity.x = -2
+                    else: player.velocity.x = 2
+                    player.velocity.y = -1
+                    player.lives -= 1
 
                 return
             except Exception as e:
