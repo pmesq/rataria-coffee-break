@@ -12,4 +12,4 @@ def main():
 main()
 
 # Encerramento do pygame e finalização do jogo
-pygame.quit()
+pygame.quit() 

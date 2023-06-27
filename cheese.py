@@ -1,7 +1,6 @@
 import pygame
 from config import Config
 from body import Body
-from collision import Collision
 
 class Cheese(Body):
     many_collected = 0
@@ -18,8 +17,6 @@ class Cheese(Body):
     @collected.setter # Setter: Define se o queijo foi coletado.
     def collected(self, collected):
         self._collected = collected
-        if collected:
-            Body.bodies.remove(self)
 
     def __contains__(self, hitbox): #Sobscreve o operador in para verificar se um ponto está dentro da hitbox do queijo
         for point in hitbox:
@@ -34,5 +31,9 @@ class Cheese(Body):
 
         pos = pygame.Vector2(pos_x, self.pos.y)
         screen.blit(self.image, (pos.x, pos.y))
+
+    def update(self, dt, bodies):
+        if self.collected:
+            bodies.remove(self)
 
        

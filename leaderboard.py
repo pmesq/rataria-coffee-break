@@ -1,3 +1,4 @@
+import pygame
 import heapq
 from config import Config
 
