@@ -1,8 +1,11 @@
 
 import pygame
+import random
 from config import Config
 from camera import Camera
 from tela import Tela
+from enemy import Enemy
+from leaderboard import Leaderboard
 
 from enum import Enum
 
@@ -49,7 +52,70 @@ class Evento:
     TODO AQUI FICA O MODO INFINITO
     '''
 
-    def arcade(keys, screen, player, tilemap, camera, bodies, dt):
+    def arcade(keys, screen, player, tilemap, camera, bodies, dt, cooldownLeft, cooldownRight):
+        # Caso seja pressionado a telca ESC, a tela volta ao menu
+        if keys[pygame.K_ESCAPE]:
+            return Tela.MENU_PRINCIPAL
+        
+        # Gera os inimigos na esquerda e na direta em tempo aleatorio respeitando o cooldown
+        if random.random() < ((1.0/60.0)*0.6) and cooldownLeft >= 0:
+            cooldownLeft = 240
+            bodies.append(Enemy(Config.RAT_COLOR, pygame.Vector2(80, 560), True))   
+        if random.random() < ((1.0/60.0)*0.6)and cooldownRight >= 0:
+            cooldownRight = 240
+            bodies.append(Enemy(Config.RAT_COLOR, pygame.Vector2(4960, 560), False))
+
+        # Diminuiu em um frame o tempo de cooldown
+        cooldownLeft -= 1
+        cooldownRight -= 1
+
+        # Captura do input do jogador
+        if keys[pygame.K_w]:
+            player.jump()
+        if keys[pygame.K_a] and not keys[pygame.K_d]:
+            player.move_left()
+        elif keys[pygame.K_d] and not keys[pygame.K_a]:
+            player.move_right()
+
+        tilemap.draw(screen, camera) # Desenho do tilemap na tela, levando em consideração a câmera
+        
+        # Atualização e desenho de todos os corpos presentes no jogo
+        for body in bodies:
+            body.update(dt)
+            body.draw(screen, camera)
+        
+        # Atualização da posição da câmera para seguir o jogador
+        camera.pos.x = min(max(0, player.pos.x - Config.SCREEN_WIDTH / 2), tilemap.m * Config.BLOCK_SIZE - Config.SCREEN_WIDTH)
+
+        # Desenha o contador de vidas
+        screen.blit(Config.LIFE(player.lives), (15,10))
+
+        # Desenha os pontos do jogador 
+        Config.draw_text(screen, Leaderboard.alinhado(Config.pontosJogador), Config.font2, Config.AMARELO, 1000, 40)
+			
+
+        if player.dead:
+            # Leitura do nível do jogo utilizando a classe LevelReader
+            return Tela.MENU_PRINCIPAL
+        # Continuo no modo arcade
+        return Tela.ARCADE
+    '''
+    TODO AQUI FICA O MODO ONDE TEM AS FASES
+    '''
+
+    def morte(keys, screen):
+        pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
+        pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))
+        Config.draw_text(screen, "Pressione ESPAÇO para reiniciar", Config.font, Config.CINZA, 362, 435+20)
+
+        # Caso o usuaŕio pressione espaço o programa segue para o menu principal
+        if keys[pygame.K_SPACE]:
+            
+            return Tela.ARCADE
+
+        return Tela.MORTE
+
+    def campanha(keys, screen, player, tilemap, camera, bodies, dt):
         # Caso seja pressionado a telca ESC, a tela volta ao menu
         if keys[pygame.K_ESCAPE]:
             return Tela.MENU_PRINCIPAL
@@ -83,32 +149,8 @@ class Evento:
 
         if player.dead:
             # Leitura do nível do jogo utilizando a classe LevelReader
-            return Tela.MORTE
+            return Tela.MENU_PRINCIPAL
         # Continuo no modo arcade
-        return Tela.ARCADE
-    '''
-    TODO AQUI FICA O MODO ONDE TEM AS FASES
-    '''
-    def morte(keys, screen):
-        pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
-        pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))
-        Config.draw_text(screen, "Pressione ESPAÇO para reiniciar", Config.font, Config.CINZA, 362, 435+20)
-
-        # Caso o usuaŕio pressione espaço o programa segue para o menu principal
-        if keys[pygame.K_SPACE]:
-            
-            return Tela.ARCADE
-
-        return Tela.MORTE
-
-    def campanha(keys, screen):
-        pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
-        pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))
-        Config.draw_text(screen, "JANELA DE CAMPANHA", Config.font, Config.BRANCO, 410, 450)
-
-        if Config.botao_sair.draw(screen):
-            return Tela.SAIR
-
         return Tela.CAMPANHA
     
     
@@ -132,6 +174,8 @@ class Evento:
             # Caso seja pressionada a tecla ENTER com algum input escrito a tela é
             # transferida para o modo arcade
             if keys[pygame.K_RETURN] and len(Config.nomeJogador) > 0:
+                Config.nomeJogador = ""
+                Config.ponstosJogador = 0
                 return Tela.ARCADE
             # Caso seja pressionada a tecla de BACKSPACE é retirado um caratere do input
             elif keys[pygame.K_BACKSPACE] and len(Config.nomeJogador) > 0:
@@ -156,6 +200,8 @@ class Evento:
         # Caso clicado o botão enter da tela o nome é lido e a tela é 
         # transferida para o modo arcade
         if Config.botao_enter.draw(screen) and len(Config.nomeJogador) > 0:
+            Config.nomeJogador = ""
+            Config.ponstosJogador = 0
             return Tela.ARCADE
         else:
             return Tela.NOME_JOGADOR
