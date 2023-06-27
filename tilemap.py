@@ -22,12 +22,15 @@ class Tilemap:
         pos = hitbox[0] #A posição 0 da hitbox é referente a parte superior esquerda
         pos = self.pos_map(pos) #Converte a posição do corpo para a posição na grade
         i = floor(pos.y)
+
         if i in range(self.n):
             j_floor = floor(pos.x)
             j_ceil = ceil(pos.x)
+            if j_floor < 0 or j_ceil >= self.m:
+                raise Collision(Collision.Side,rebound=-0.5)
             block_inside = self.grid[i][j_floor] != Tile.NONE or self.grid[i][j_ceil] != Tile.NONE
             if block_inside:
-                raise Collision(Collision.Side)
+                raise Collision(**Config.BLOCK_COLLISION)
         
         #Verifica se o bloco abaixo é um Tile.GROUND
         pos_bellow = hitbox[2] #A posição 2 da hitbox é referente a parte inferior esquerda
@@ -35,6 +38,8 @@ class Tilemap:
         i = floor(pos_bellow.y)
         j_floor = floor(pos_bellow.x)
         j_ceil = ceil(pos_bellow.x)
+        if j_floor < 0 or j_ceil >= self.m:
+            raise Collision(**Config.BLOCK_COLLISION)
         
         if i in range(self.n):
             block_bellow = self.grid[i][j_floor] == Tile.GROUND or self.grid[i][j_ceil] == Tile.GROUND

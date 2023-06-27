@@ -8,6 +8,7 @@ class Tela(Enum):
     LEADERBOARD = 4
     CAMPANHA = 5
     NOME_JOGADOR = 6
+    MORTE = 7
     SAIR = 0
 
     def setter(self, pos):

@@ -9,6 +9,8 @@ from button import Button
 from tela import Tela
 from evento import Evento
 from leaderboard import Leaderboard
+from body import Body
+from cheese import Cheese
 
 from enum import Enum
 
@@ -73,6 +75,11 @@ def main():
             telaAtual = Evento.leaderboard(keys, screen, leaderboard)
         elif telaAtual == Tela.NOME_JOGADOR:
             telaAtual = Evento.inserirNome(keys, screen, charLido)
+        elif telaAtual == Tela.MORTE:
+            Body.bodies = []
+            Cheese.many_collected = 0
+            tilemap, player, bodies = LevelReader.read('data/levels/1.txt')
+            telaAtual = Evento.morte(keys, screen)
 
         # Atualização da tela e controle de FPS
         pygame.display.flip()

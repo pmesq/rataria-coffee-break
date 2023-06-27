@@ -75,11 +75,32 @@ class Evento:
         # Desenha o contador de vidas
         screen.blit(Config.LIFE(player.lives), (15,10))
 
+        #Desenha o contador de queijos
+        from cheese import Cheese
+        screen.blit(Config.CHEESE_COUNTER, (15, 20+Config.LIFE_HEIGTH))
+        Config.draw_text(screen, f"{Cheese.many_collected}", Config.font, Config.BRANCO, 15+0.7*Config.CHEESE_WIDTH+10, 20+Config.LIFE_HEIGTH)
+
+
+        if player.dead:
+            # Leitura do nível do jogo utilizando a classe LevelReader
+            return Tela.MORTE
         # Continuo no modo arcade
         return Tela.ARCADE
     '''
     TODO AQUI FICA O MODO ONDE TEM AS FASES
     '''
+    def morte(keys, screen):
+        pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
+        pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))
+        Config.draw_text(screen, "Pressione ESPAÇO para reiniciar", Config.font, Config.CINZA, 362, 435+20)
+
+        # Caso o usuaŕio pressione espaço o programa segue para o menu principal
+        if keys[pygame.K_SPACE]:
+            
+            return Tela.ARCADE
+
+        return Tela.MORTE
+
     def campanha(keys, screen):
         pygame.draw.rect(screen, Config.BRANCO, (359, 432, 516, 56))
         pygame.draw.rect(screen, Config.PRETO, (362, 435, 510, 50))

@@ -29,6 +29,9 @@ class Config:
     # Configurações dos blocos
     BLOCK_SIZE = 80
     BLOCK_COLOR = "#222222"
+    BLOCK_REBOUND = -0.5
+    BLOCK_DAMAGE = 0
+    BLOCK_COLLISION = {"cod_type":3, "damage":BLOCK_DAMAGE, "rebound":BLOCK_REBOUND}
 
     # Configuração do jogador
     PLAYER_COLOR = "purple"
@@ -40,11 +43,20 @@ class Config:
     rato_esquerda = lambda color: pygame.image.load(f'imgs/ratos/{color}/left.png')
     RAT_RIGHT = lambda color, indice: pygame.transform.scale(Leitor.get_image_by_gid(Config.rato_direita(color), floor(indice), 2, 65, 72) , (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
     RAT_LEFT = lambda color, indice: pygame.transform.scale(Leitor.get_image_by_gid(Config.rato_esquerda(color), floor(indice), 2, 65, 72) , (Config.BLOCK_SIZE,Config.BLOCK_SIZE))
+    RAT_DAMAGE = 1
+    RAT_REBOUND = -1.5
+    RAT_COLLISION = {"cod_type":3, "damage":RAT_DAMAGE, "rebound":RAT_REBOUND}
 
     # Configuração do contador de vida
     LIFE_WIDTH = 0.5*BLOCK_SIZE*(199/57)
     LIFE_HEIGTH = 0.5*BLOCK_SIZE
     LIFE = lambda x: pygame.transform.scale(pygame.image.load(f'imgs/lives/{x}.png'), (Config.LIFE_WIDTH, Config.LIFE_HEIGTH))
+
+    #Configuração do queijo
+    CHEESE_WIDTH = 0.5*BLOCK_SIZE*(59/38)
+    CHEESE_HEIGTH = 0.5*BLOCK_SIZE
+    CHEESE_IMAGE = pygame.transform.scale(pygame.image.load('imgs/cheese.png'), (CHEESE_WIDTH, CHEESE_HEIGTH))
+    CHEESE_COUNTER = pygame.transform.scale(pygame.image.load('imgs/cheese.png'), (0.7*CHEESE_WIDTH, 0.7*CHEESE_HEIGTH))
 
     
     # Configuração da fonte
